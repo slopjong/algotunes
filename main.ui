@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>465</width>
-    <height>356</height>
+    <width>574</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,84 +25,6 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <spacer name="horizontalSpacer_9">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="output_edit">
-        <property name="text">
-         <string>test</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="loop_edit">
-        <property name="text">
-         <string>for(int t = 0;;++t)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout"/>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QPushButton" name="add_btn">
-        <property name="text">
-         <string>Add line</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="remove_btn">
-        <property name="text">
-         <string>Remove line</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
      <widget class="QScrollArea" name="scrollArea">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -112,15 +34,29 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>445</width>
-         <height>176</height>
+         <width>552</width>
+         <height>261</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0,0" columnminimumwidth="0,0,0,0,0">
+        <item row="0" column="2">
          <widget class="QLineEdit" name="edit_1">
           <property name="text">
            <string>((t&gt;&gt;6|t|t&gt;&gt;(t&lt;&lt;16))*10+((t&gt;&gt;11)&amp;7))/200</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="remove_1">
+          <property name="text">
+           <string>Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="play_stop_1">
+          <property name="text">
+           <string>Play</string>
           </property>
          </widget>
         </item>
@@ -129,29 +65,16 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayout_add">
       <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="play_stop_btn">
+       <widget class="QPushButton" name="add_line">
         <property name="text">
-         <string>Play</string>
+         <string>Add</string>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_7">
+       <spacer name="horizontalSpacer_4">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -172,8 +95,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>465</width>
-     <height>25</height>
+     <width>574</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>
@@ -182,5 +105,3 @@
  <resources/>
  <connections/>
 </ui>
-
-
