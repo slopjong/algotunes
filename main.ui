@@ -38,25 +38,25 @@
          <height>261</height>
         </rect>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0,0" columnminimumwidth="0,0,0,0,0">
+       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0" columnminimumwidth="0,0,0">
         <item row="0" column="2">
-         <widget class="QLineEdit" name="edit_1">
+         <widget class="QPushButton" name="play_stop_1">
           <property name="text">
-           <string>((t&gt;&gt;6|t|t&gt;&gt;(t&lt;&lt;16))*10+((t&gt;&gt;11)&amp;7))/200</string>
+           <string>Play</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="3">
+        <item row="0" column="1">
          <widget class="QPushButton" name="remove_1">
           <property name="text">
            <string>Remove</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="play_stop_1">
+        <item row="0" column="0">
+         <widget class="QLineEdit" name="edit_1">
           <property name="text">
-           <string>Play</string>
+           <string>((t&gt;&gt;6|t|t&gt;&gt;(t&lt;&lt;16))*10+((t&gt;&gt;11)&amp;7))/200</string>
           </property>
          </widget>
         </item>

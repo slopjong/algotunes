@@ -1,8 +1,12 @@
 #!/usr/bin/python
 
 from PyQt4 import uic
-from PyQt4.QtCore import *
+
 from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+
+#from PyQt4.QtGui import QApplication, QMainWindow, QPushButton, QLineEdit
+#from PyQt4.QtCore import QSignalMapper, pyqtSignal
 
 import sys, os, subprocess, re
  
@@ -10,21 +14,35 @@ class MainWindow(QMainWindow):
 	
 	def __init__(self):
 		
+		# initialize the user interface
 		QMainWindow.__init__(self)
 		self.ui = uic.loadUi("main.ui", self)
-		self.connect_wiring()
+		
+		# define a signal mapper to define one single handler for a series of buttons
+		self.signal_mapper = QSignalMapper(self)
+		self.connect(self.signal_mapper, SIGNAL("mapped(const QString &)"), self.button_clicked)
+
+		# connect the initial existing remove button of the first line with the signal mapper
+		self.connect(self.remove_1, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
+		self.signal_mapper.setMapping(self.remove_1, "remove_1")
+
+		# connect the initial existing play/stop button of the first line with the signal mapper
+		self.connect(self.play_stop_1, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
+		self.signal_mapper.setMapping(self.play_stop_1, "play_stop_1")
 		
 		# The subprocess to play the sound
 		# TODO create a hash table for the players
 		# since there won't be one single player
 		#self.player = None
 		
-		self.last_line_id = 1
-				
-	def connect_wiring(self):
+		# an ID which is incremented each time a new line is added
+		self.last_line_id = 1	
 		
+		# button to add a new line
 		self.add_line.clicked.connect(self.handle_add_clicked)
-		self.remove_1.clicked.connect(self.handle_remove_clicked)
+		
+	def button_clicked(self, value):
+		print("button clicked", value)
 		
 	def handle_play_stop_clicked(self):
 		
@@ -37,7 +55,7 @@ class MainWindow(QMainWindow):
 		#	self.stop()
 		#	self.play_stop_btn.setText("Play")
 		print("handle_play_stop_clicked")
-			
+		
 	def handle_add_clicked(self):
 		
 		self.last_line_id += 1
@@ -45,18 +63,23 @@ class MainWindow(QMainWindow):
 		
 		edit = QLineEdit(self.ui.scrollAreaWidgetContents)
 		edit.setObjectName("edit_" + str(self.last_line_id))
-		self.scrollAreaWidgetContents.layout().addWidget(edit, rows+1, 2)
+		self.scrollAreaWidgetContents.layout().addWidget(edit, rows+1, 0)
 		
 		remove = QPushButton(self.ui.scrollAreaWidgetContents)
 		remove.setObjectName("remove_" + str(self.last_line_id))
 		remove.setText("Remove")
-		self.scrollAreaWidgetContents.layout().addWidget(remove, rows+1, 3)
+		self.scrollAreaWidgetContents.layout().addWidget(remove, rows+1, 1)
 
+		self.connect(remove, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
+		self.signal_mapper.setMapping(remove, "remove_" + str(self.last_line_id))
+		
 		play = QPushButton(self.ui.scrollAreaWidgetContents)
 		play.setObjectName("play_" + str(self.last_line_id))
 		play.setText("Play")
-		self.scrollAreaWidgetContents.layout().addWidget(play, rows+1, 4)	
+		self.scrollAreaWidgetContents.layout().addWidget(play, rows+1, 2)	
 		
+		self.connect(play, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
+		self.signal_mapper.setMapping(play, "play_stop_" + str(self.last_line_id))
 	
 	def handle_remove_clicked(self):
 		
