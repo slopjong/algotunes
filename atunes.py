@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
 		p2.wait()
 		
 		p3 = Popen(["/tmp/algotunes/" + line_number + ".8b" ], stdout=PIPE)
-		player = Popen(["aplay"], stdin=p3.stdout)
+		player = Popen(["aplay", "-r8000"], stdin=p3.stdout)
 		
 		self.players["player_" + line_number] = player
 		self.objects["play_stop_" + line_number].setText("Stop")
