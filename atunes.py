@@ -125,8 +125,9 @@ class MainWindow(QMainWindow):
 		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar((t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17));}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
 		p3 = Popen(["/tmp/algotunes/" + line_number + ".8b" ], stdout=PIPE)
-		p4 = Popen(["aplay"], stdin=p3.stdout)
-
+		player = Popen(["aplay"], stdin=p3.stdout)
+		
+		self.players["player_" + line_number] = player
 		self.objects["play_stop_" + line_number].setText("Stop")
 	
 	def stop(self, player, line_number):
@@ -136,7 +137,7 @@ class MainWindow(QMainWindow):
 		
 		# stop the player and remove it from the list
 		player.terminate()
-		del self.objects["play_stop_" + line_number]
+		del self.players["player_" + line_number]
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
