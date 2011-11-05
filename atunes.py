@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
 
 		# define a signal mapper to map fired signals of a series of buttons to one single handler
 		# for code examples, see [1] and [2]
+		# TODO: use one signal mapper per button type (remove, import, play, ...)
 		self.signal_mapper = QSignalMapper(self)
 		self.connect(self.signal_mapper, SIGNAL("mapped(const QString &)"), self.button_clicked)
 
@@ -36,6 +37,10 @@ class MainWindow(QMainWindow):
 		# button to add a new line
 		self.add_line.clicked.connect(self.handle_add_clicked)
 		
+		# 
+		self.map_text_changed_signals()
+				
+		# import presets from the patte.rn file
 		f = open('patte.rn', "r")
 		patterns = f.readlines()
 		f.close()
@@ -52,12 +57,22 @@ class MainWindow(QMainWindow):
 		# creating the temp folder for the samples
 		os.system("mkdir -p /tmp/algotunes")
 		
+	def map_text_changed_signals(self):
+		
+		self.text_changed_mapper = QSignalMapper(self)
+		self.text_changed_mapper.setMapping(self.edit_1, 1)
+		self.connect(self.edit_1, SIGNAL("textEdited(QString)"), self.text_changed_mapper, SLOT("map()"))
+		self.connect( self.text_changed_mapper, SIGNAL("mapped(int)"), self.text_changed)
+		print("map_text_changed_signals")
+
+	def text_changed(self, line_number):
+		print("line:" + str(line_number))
+		
 	# See [0]
 	def closeEvent(self, event):
 		os.system("rm -rf /tmp/algotunes")
 		os.system("killall aplay")
 		event.accept()
-
 		
 	def button_clicked(self, action):
 		
@@ -160,7 +175,7 @@ class MainWindow(QMainWindow):
 		# stop the player and remove it from the list
 		player.terminate()
 		del self.players["player_" + line_number]
-
+	
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
 	wnd = MainWindow()
