@@ -66,6 +66,7 @@ class MainWindow(QMainWindow):
 
 		m = re.search('remove', action)
 		if(m!=None):
+			self.handle_play_stop_clicked(line_number)
 			self.delete_line(line_number)
 
 		m = re.search('play_stop', action)
