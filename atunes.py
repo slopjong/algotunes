@@ -52,7 +52,6 @@ class MainWindow(QMainWindow):
 
 		m = re.search('play_stop', action)
 		if(m!=None):
-			#print("play_stop")
 			self.handle_play_stop_clicked(line_number)
 
 	def delete_line(self, line_number):
@@ -110,17 +109,6 @@ class MainWindow(QMainWindow):
 		self.objects["edit_" + str(self.last_line_id)] = edit
 		self.objects["remove_" + str(self.last_line_id)] = remove
 		self.objects["play_stop_" + str(self.last_line_id)] = play
-		
-	def handle_remove_clicked(self):
-		
-		print("handle_remove_clicked")
-	
-	
-	def compile_file(self):
-		
-		#if os.system("gcc %(file)s.c -std=c99 -o%(file)s.out" % { "file":self.output_edit.text() }) != 0:
-		#	QMessageBox.critical(self, "Error", "Compilation failed")
-		print("compile")
 		
 	def play(self, line_number):
 		
