@@ -36,6 +36,9 @@ class MainWindow(QMainWindow):
 		# button to add a new line
 		self.add_line.clicked.connect(self.handle_add_clicked)
 		
+		# connect the preset list
+		self.presets.itemDoubleClicked.connect(self.preset_clicked)
+		
 		self.objects = {'edit_1': self.ui.edit_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
 		self.players = {}
 		
@@ -117,6 +120,12 @@ class MainWindow(QMainWindow):
 		self.objects["edit_" + str(self.last_line_id)] = edit
 		self.objects["remove_" + str(self.last_line_id)] = remove
 		self.objects["play_stop_" + str(self.last_line_id)] = play
+		
+	def preset_clicked(self, item):
+		
+		self.handle_add_clicked()
+		edit = self.objects["edit_" + str(self.last_line_id)]
+		edit.setText(item.text())
 		
 	def play(self, line_number):
 
