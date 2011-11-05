@@ -5,9 +5,6 @@ from PyQt4 import uic
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-#from PyQt4.QtGui import QApplication, QMainWindow, QPushButton, QLineEdit
-#from PyQt4.QtCore import QSignalMapper, pyqtSignal
-
 import sys, os, subprocess, re
  
 class MainWindow(QMainWindow):
@@ -17,7 +14,6 @@ class MainWindow(QMainWindow):
 		# initialize the user interface
 		QMainWindow.__init__(self)
 		self.ui = uic.loadUi("main.ui", self)
-		
 
 		# Some code examples for a signal mapper here:
 		# 
@@ -36,11 +32,6 @@ class MainWindow(QMainWindow):
 		self.connect(self.play_stop_1, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
 		self.signal_mapper.setMapping(self.play_stop_1, "play_stop_1")
 		
-		# The subprocess to play the sound
-		# TODO create a hash table for the players
-		# since there won't be one single player
-		#self.player = None
-		
 		# an ID which is incremented each time a new line is added
 		self.last_line_id = 1	
 		
@@ -48,6 +39,7 @@ class MainWindow(QMainWindow):
 		self.add_line.clicked.connect(self.handle_add_clicked)
 		
 		self.objects = {'edit_1': self.ui.edit_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
+		self.players = {}
 		
 	def button_clicked(self, action):
 		
@@ -60,7 +52,8 @@ class MainWindow(QMainWindow):
 
 		m = re.search('play_stop', action)
 		if(m!=None):
-			print("play_stop")
+			#print("play_stop")
+			self.play()
 
 	def delete_line(self, line_number):
 
