@@ -47,19 +47,38 @@ class MainWindow(QMainWindow):
 		# button to add a new line
 		self.add_line.clicked.connect(self.handle_add_clicked)
 		
+		self.objects = {'edit_1': self.ui.edit_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
+		
 	def button_clicked(self, action):
 		
-		m = re.search('\d', action)
-		line_numer = m.group(0)
+		m = re.search('\d+', action)
+		line_number = m.group(0)
 
 		m = re.search('remove', action)
 		if(m!=None):
-			print(self.remove_1)
+			self.delete_line(line_number)
 
 		m = re.search('play_stop', action)
 		if(m!=None):
 			print("play_stop")
+
+	def delete_line(self, line_number):
+
+		# delete the edit field
+		edit = self.objects["edit_" + line_number]
+		edit.setParent(None)
+		del self.objects["edit_" + line_number]
 		
+		# delete the remove button
+		remove = self.objects["remove_" + line_number]
+		remove.setParent(None)
+		del self.objects["remove_" + line_number]
+		
+		# delete the play/stop button
+		play = self.objects["play_stop_" + line_number]
+		play.setParent(None)
+		del self.objects["play_stop_" + line_number]
+			
 	def handle_play_stop_clicked(self):
 		
 		#if self.play_stop_btn.text() == "Play":
@@ -97,6 +116,11 @@ class MainWindow(QMainWindow):
 		self.connect(play, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
 		self.signal_mapper.setMapping(play, "play_stop_" + str(self.last_line_id))
 	
+		# add the new components to the objects dictionary
+		self.objects["edit_" + str(self.last_line_id)] = edit
+		self.objects["remove_" + str(self.last_line_id)] = remove
+		self.objects["play_stop_" + str(self.last_line_id)] = play
+		
 	def handle_remove_clicked(self):
 		
 		print("handle_remove_clicked")
