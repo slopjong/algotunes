@@ -113,16 +113,12 @@ class MainWindow(QMainWindow):
 		self.objects["play_stop_" + str(self.last_line_id)] = play
 		
 	def play(self, line_number):
-		
-		#if self.player != None:
-		#	self.stop()
-		#self.source = subprocess.Popen("./%s.out" % self.output_edit.text(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		#self.player = subprocess.Popen(["pacat", "--format", "u8", "--rate", "8000"], stdin=self.source.stdout)
-		#self.player = subprocess.Popen(["aplay"], stdin=self.source.stdout)
-		
-		#echo "main(t){for(t=0;;++t)putchar(  (t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17)  );}" | gcc -xc -lm -&& ./a.out | aplay
-		os.system("mkdir -p /tmp/algotunes")
-		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar((t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17));}"], stdout=PIPE)
+
+		#os.system("mkdir -p /tmp/algotunes")
+		#os.system("rm -f /tmp/algotunes/" + line_number + ".8b")
+		sample = self.objects["edit_" + line_number].text()
+		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar("+ sample +");}"], stdout=PIPE)
+		#p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar((t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17));}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
 		p3 = Popen(["/tmp/algotunes/" + line_number + ".8b" ], stdout=PIPE)
 		player = Popen(["aplay"], stdin=p3.stdout)

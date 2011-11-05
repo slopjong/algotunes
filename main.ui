@@ -56,7 +56,7 @@
         <item row="0" column="0">
          <widget class="QLineEdit" name="edit_1">
           <property name="text">
-           <string>((t&gt;&gt;6|t|t&gt;&gt;(t&lt;&lt;16))*10+((t&gt;&gt;11)&amp;7))/200</string>
+           <string>(t|t&gt;&gt;23)&gt;&gt;(t&gt;&gt;7)|(t&lt;&lt;5)&gt;&gt;(t&gt;&gt;11)&gt;&gt;(t&gt;&gt;15) * t</string>
           </property>
          </widget>
         </item>
