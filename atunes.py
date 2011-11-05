@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
 		m = re.search('play_stop', action)
 		if(m!=None):
 			#print("play_stop")
-			self.play()
+			self.handle_play_stop_clicked(line_number)
 
 	def delete_line(self, line_number):
 
@@ -72,17 +72,14 @@ class MainWindow(QMainWindow):
 		play.setParent(None)
 		del self.objects["play_stop_" + line_number]
 			
-	def handle_play_stop_clicked(self):
+	def handle_play_stop_clicked(self, line_number):
 		
-		#if self.play_stop_btn.text() == "Play":
-		#	self.write()
-		#	self.compile_file()
-		#			self.play()
-		#	self.play_stop_btn.setText("Stop")
-		#else:
-		#	self.stop()
-		#	self.play_stop_btn.setText("Play")
-		print("handle_play_stop_clicked")
+		player = self.players.get("player_" + line_number)
+		
+		if(player == None):
+			self.play(line_number)
+		else:
+			self.stop(player, line_number)
 		
 	def handle_add_clicked(self):
 		
@@ -125,22 +122,23 @@ class MainWindow(QMainWindow):
 		#	QMessageBox.critical(self, "Error", "Compilation failed")
 		print("compile")
 		
-	def play(self):
+	def play(self, line_number):
 		
 		#if self.player != None:
 		#	self.stop()
 		#self.source = subprocess.Popen("./%s.out" % self.output_edit.text(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		#self.player = subprocess.Popen(["pacat", "--format", "u8", "--rate", "8000"], stdin=self.source.stdout)
 		#self.player = subprocess.Popen(["aplay"], stdin=self.source.stdout)
-		print("play")
+		#print("play")
+		self.objects["play_stop_" + line_number].setText("Stop")
 	
-	def stop(self):
+	def stop(self, player, line_number):
 		
-		#if self.player == None:
-		#	return
-		#self.player.terminate()
-		#self.player = None
-		print("stop")
+		# reset the text to play
+		self.objects["play_stop_" + line_number].setText("Play")
+		
+		player.terminate()
+		del self.objects["play_stop_" + line_number]
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
