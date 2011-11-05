@@ -102,61 +102,9 @@
         <height>300</height>
        </size>
       </property>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;23)&gt;&gt;(t&gt;&gt;7)|(t&lt;&lt;5)&gt;&gt;(t&gt;&gt;11)&gt;&gt;(t&gt;&gt;15) * t</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;23)&gt;&gt;(t*t)|(t&lt;&lt;5)&gt;&gt;(t&gt;&gt;11)&gt;&gt;(t&gt;&gt;15) * t</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;23) &gt;&gt; (t*t*t|11) | (t&lt;&lt;5) &gt;&gt; (t&gt;&gt;11) &gt;&gt; (t&gt;&gt;15) &lt;&lt; 2</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;23) &gt;&gt; (t|11) &amp; (t&lt;&lt;5) &gt;&gt; (t&gt;&gt;11) &gt;&gt; (t&gt;&gt;15) &lt;&lt; (t&amp;3)</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;23) &amp; (t&lt;&lt;5) &gt;&gt; (t&gt;&gt;11) * (t)</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;13)  &gt;&gt; (t&gt;&gt;10) * (t)</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>((t|t&gt;&gt;12)  &gt;&gt; (t&gt;&gt;19)) * (t/20)</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>t*(t/20)</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>(t|t&gt;&gt;17)&gt;&gt;(t&gt;&gt;7)|(t&lt;&lt;2|t&lt;&lt;8)&gt;&gt;(t&gt;&gt;11)|(t&lt;&lt;2|t&lt;&lt;11)&gt;&gt;(t&gt;&gt;17)</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>((t&gt;&gt;6|t|t&gt;&gt;(t&lt;&lt;16))*10+((t&gt;&gt;11)&amp;7))</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>t&gt;&gt;6^t&amp;0x25|t+(t^t&gt;&gt;11)-t* ((t%24?2:6)&amp;t&gt;&gt;11)^t&lt;&lt;1&amp;(t&amp;0x256?t&gt;&gt;4:t&gt;&gt;10)</string>
-       </property>
-      </item>
+      <property name="resizeMode">
+       <enum>QListView::Adjust</enum>
+      </property>
      </widget>
     </item>
    </layout>

@@ -36,6 +36,13 @@ class MainWindow(QMainWindow):
 		# button to add a new line
 		self.add_line.clicked.connect(self.handle_add_clicked)
 		
+		f = open('patte.rn', "r")
+		patterns = f.readlines()
+		f.close()
+		for pattern in patterns:
+			pattern = pattern.rstrip('\r\n')
+			self.presets.addItem(pattern)
+		
 		# connect the preset list
 		self.presets.itemDoubleClicked.connect(self.preset_clicked)
 		
