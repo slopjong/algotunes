@@ -17,12 +17,8 @@ class MainWindow(QMainWindow):
 		QMainWindow.__init__(self)
 		self.ui = uic.loadUi("main.ui", self)
 
-		# Some code examples for a signal mapper here:
-		# 
-		#    * http://diotavelli.net/PyQtWiki/Using%20a%20signal%20mapper
-		#    * http://pysnippet.blogspot.com/2010/06/qsignalmapper-at-your-service.html
-		#
 		# define a signal mapper to map fired signals of a series of buttons to one single handler
+		# for code examples, see [1] and [2]
 		self.signal_mapper = QSignalMapper(self)
 		self.connect(self.signal_mapper, SIGNAL("mapped(const QString &)"), self.button_clicked)
 
@@ -42,6 +38,13 @@ class MainWindow(QMainWindow):
 		
 		self.objects = {'edit_1': self.ui.edit_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
 		self.players = {}
+		
+	# See [0]
+	def closeEvent(self, event):
+		os.system("rm -rf /tmp/algotunes")
+		os.system("killall aplay")
+		event.accept()
+
 		
 	def button_clicked(self, action):
 		
@@ -114,12 +117,14 @@ class MainWindow(QMainWindow):
 		
 	def play(self, line_number):
 
-		#os.system("mkdir -p /tmp/algotunes")
+		os.system("mkdir -p /tmp/algotunes")
 		#os.system("rm -f /tmp/algotunes/" + line_number + ".8b")
 		sample = self.objects["edit_" + line_number].text()
 		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar("+ sample +");}"], stdout=PIPE)
-		#p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar((t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17));}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
+		
+		
+		# TODO: p3 must wait until p2
 		p3 = Popen(["/tmp/algotunes/" + line_number + ".8b" ], stdout=PIPE)
 		player = Popen(["aplay"], stdin=p3.stdout)
 		
@@ -141,3 +146,9 @@ if __name__ == "__main__":
 	wnd.show()
 	app.exec_()
 
+
+######################################################################
+# [0] http://stackoverflow.com/questions/1414781/prompt-on-exit-in-pyqt-application
+# [1] http://diotavelli.net/PyQtWiki/Using%20a%20signal%20mapper
+# [2] http://pysnippet.blogspot.com/2010/06/qsignalmapper-at-your-service.html
+######################################################################
