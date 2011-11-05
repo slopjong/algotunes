@@ -47,8 +47,18 @@ class MainWindow(QMainWindow):
 		# button to add a new line
 		self.add_line.clicked.connect(self.handle_add_clicked)
 		
-	def button_clicked(self, value):
-		print("button clicked", value)
+	def button_clicked(self, action):
+		
+		m = re.search('\d', action)
+		line_numer = m.group(0)
+
+		m = re.search('remove', action)
+		if(m!=None):
+			print(self.remove_1)
+
+		m = re.search('play_stop', action)
+		if(m!=None):
+			print("play_stop")
 		
 	def handle_play_stop_clicked(self):
 		
