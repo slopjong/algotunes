@@ -118,7 +118,6 @@ class MainWindow(QMainWindow):
 	def play(self, line_number):
 
 		os.system("mkdir -p /tmp/algotunes")
-		#os.system("rm -f /tmp/algotunes/" + line_number + ".8b")
 		sample = self.objects["edit_" + line_number].text()
 		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar("+ sample +");}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
