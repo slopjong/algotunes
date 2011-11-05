@@ -51,7 +51,7 @@ class MainWindow(QMainWindow):
 		# connect the preset list
 		self.presets.itemDoubleClicked.connect(self.preset_clicked)
 		
-		self.objects = {'edit_1': self.ui.edit_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
+		self.objects = {'edit_1': self.ui.edit_1, 'import_1':self.ui.import_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
 		self.players = {}
 		
 		# creating the temp folder for the samples
@@ -63,10 +63,18 @@ class MainWindow(QMainWindow):
 		self.text_changed_mapper.setMapping(self.edit_1, 1)
 		self.connect(self.edit_1, SIGNAL("textEdited(QString)"), self.text_changed_mapper, SLOT("map()"))
 		self.connect( self.text_changed_mapper, SIGNAL("mapped(int)"), self.text_changed)
-		print("map_text_changed_signals")
 
+	# activates the import button as soon as the line edit contains a pattern which is not yet in the list
 	def text_changed(self, line_number):
-		print("line:" + str(line_number))
+		
+		edit_text = self.objects["edit_" + str(line_number)].text()
+		list = self.presets.findItems(edit_text, Qt.MatchExactly)
+		
+		button = self.objects["import_" + str(line_number)]
+		if(len(list) == 0):
+			button.setEnabled(True)
+		else:
+			button.setEnabled(False)
 		
 	# See [0]
 	def closeEvent(self, event):
@@ -99,6 +107,11 @@ class MainWindow(QMainWindow):
 		remove = self.objects["remove_" + line_number]
 		remove.setParent(None)
 		del self.objects["remove_" + line_number]
+
+		# delete the import button
+		_import = self.objects["import_" + line_number]
+		_import .setParent(None)
+		del self.objects["import_" + line_number]
 		
 		# delete the play/stop button
 		play = self.objects["play_stop_" + line_number]
@@ -122,11 +135,24 @@ class MainWindow(QMainWindow):
 		edit = QLineEdit(self.ui.scrollAreaWidgetContents)
 		edit.setObjectName("edit_" + str(self.last_line_id))
 		self.scrollAreaWidgetContents.layout().addWidget(edit, rows+1, 0)
+
+		# listen to text edited events
+		self.connect(edit, SIGNAL("textEdited(QString)"), self.text_changed_mapper, SLOT("map()"))
+		self.text_changed_mapper.setMapping(edit, self.last_line_id)
+		
+		_import = QPushButton(self.ui.scrollAreaWidgetContents)
+		_import.setObjectName("import_" + str(self.last_line_id))
+		_import.setText("Import")
+		_import.setEnabled(False)
+		self.scrollAreaWidgetContents.layout().addWidget(_import, rows+1, 1)	
+		
+		#self.connect(_import, SIGNAL("clicked()"), self.import_clicked_mapper, SLOT("map()"))
+		#self.signal_mapper.setMapping(_import, self.last_line_id)
 		
 		remove = QPushButton(self.ui.scrollAreaWidgetContents)
 		remove.setObjectName("remove_" + str(self.last_line_id))
 		remove.setText("Remove")
-		self.scrollAreaWidgetContents.layout().addWidget(remove, rows+1, 1)
+		self.scrollAreaWidgetContents.layout().addWidget(remove, rows+1, 2)
 
 		self.connect(remove, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
 		self.signal_mapper.setMapping(remove, "remove_" + str(self.last_line_id))
@@ -134,13 +160,14 @@ class MainWindow(QMainWindow):
 		play = QPushButton(self.ui.scrollAreaWidgetContents)
 		play.setObjectName("play_" + str(self.last_line_id))
 		play.setText("Play")
-		self.scrollAreaWidgetContents.layout().addWidget(play, rows+1, 2)	
+		self.scrollAreaWidgetContents.layout().addWidget(play, rows+1, 3)	
 		
 		self.connect(play, SIGNAL("clicked()"), self.signal_mapper, SLOT("map()"))
 		self.signal_mapper.setMapping(play, "play_stop_" + str(self.last_line_id))
 	
 		# add the new components to the objects dictionary
 		self.objects["edit_" + str(self.last_line_id)] = edit
+		self.objects["import_" + str(self.last_line_id)] = _import
 		self.objects["remove_" + str(self.last_line_id)] = remove
 		self.objects["play_stop_" + str(self.last_line_id)] = play
 		
