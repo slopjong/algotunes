@@ -125,6 +125,7 @@ class MainWindow(QMainWindow):
 		# reset the text to play
 		self.objects["play_stop_" + line_number].setText("Play")
 		
+		# stop the player and remove it from the list
 		player.terminate()
 		del self.objects["play_stop_" + line_number]
 
