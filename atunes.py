@@ -119,6 +119,8 @@ class MainWindow(QMainWindow):
 
 		os.system("mkdir -p /tmp/algotunes")
 		sample = self.objects["edit_" + line_number].text()
+		
+		# for Popen stuff, see [3]
 		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar("+ sample +");}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
 		
@@ -151,4 +153,5 @@ if __name__ == "__main__":
 # [0] http://stackoverflow.com/questions/1414781/prompt-on-exit-in-pyqt-application
 # [1] http://diotavelli.net/PyQtWiki/Using%20a%20signal%20mapper
 # [2] http://pysnippet.blogspot.com/2010/06/qsignalmapper-at-your-service.html
+# [3] http://www.python.org/dev/peps/pep-0324/
 ######################################################################
