@@ -18,7 +18,13 @@ class MainWindow(QMainWindow):
 		QMainWindow.__init__(self)
 		self.ui = uic.loadUi("main.ui", self)
 		
-		# define a signal mapper to define one single handler for a series of buttons
+
+		# Some code examples for a signal mapper here:
+		# 
+		#    * http://diotavelli.net/PyQtWiki/Using%20a%20signal%20mapper
+		#    * http://pysnippet.blogspot.com/2010/06/qsignalmapper-at-your-service.html
+		#
+		# define a signal mapper to map fired signals of a series of buttons to one single handler
 		self.signal_mapper = QSignalMapper(self)
 		self.connect(self.signal_mapper, SIGNAL("mapped(const QString &)"), self.button_clicked)
 
