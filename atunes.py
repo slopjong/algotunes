@@ -39,6 +39,9 @@ class MainWindow(QMainWindow):
 		self.objects = {'edit_1': self.ui.edit_1, 'remove_1': self.ui.remove_1, 'play_stop_1': self.ui.play_stop_1}
 		self.players = {}
 		
+		# creating the temp folder for the samples
+		os.system("mkdir -p /tmp/algotunes")
+		
 	# See [0]
 	def closeEvent(self, event):
 		os.system("rm -rf /tmp/algotunes")
@@ -117,10 +120,9 @@ class MainWindow(QMainWindow):
 		
 	def play(self, line_number):
 
-		os.system("mkdir -p /tmp/algotunes")
+		# for Popen and os.system stuff, see [3] and [4]
 		sample = self.objects["edit_" + line_number].text()
 		
-		# for Popen stuff, see [3]
 		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar("+ sample +");}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
 		
@@ -154,4 +156,5 @@ if __name__ == "__main__":
 # [1] http://diotavelli.net/PyQtWiki/Using%20a%20signal%20mapper
 # [2] http://pysnippet.blogspot.com/2010/06/qsignalmapper-at-your-service.html
 # [3] http://www.python.org/dev/peps/pep-0324/
+# [4] http://stackoverflow.com/questions/4813238/difference-between-subprocess-popen-and-os-system
 ######################################################################
