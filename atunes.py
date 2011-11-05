@@ -123,8 +123,9 @@ class MainWindow(QMainWindow):
 		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar("+ sample +");}"], stdout=PIPE)
 		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
 		
+		# wait until the sample is compiled
+		p2.wait()
 		
-		# TODO: p3 must wait until p2
 		p3 = Popen(["/tmp/algotunes/" + line_number + ".8b" ], stdout=PIPE)
 		player = Popen(["aplay"], stdin=p3.stdout)
 		
