@@ -4,8 +4,10 @@ from PyQt4 import uic
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
+from subprocess import *
 
-import sys, os, subprocess, re
+import sys, os, re
+
  
 class MainWindow(QMainWindow):
 	
@@ -117,7 +119,14 @@ class MainWindow(QMainWindow):
 		#self.source = subprocess.Popen("./%s.out" % self.output_edit.text(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		#self.player = subprocess.Popen(["pacat", "--format", "u8", "--rate", "8000"], stdin=self.source.stdout)
 		#self.player = subprocess.Popen(["aplay"], stdin=self.source.stdout)
-		#print("play")
+		
+		#echo "main(t){for(t=0;;++t)putchar(  (t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17)  );}" | gcc -xc -lm -&& ./a.out | aplay
+		os.system("mkdir -p /tmp/algotunes")
+		p1 = Popen(["echo", "main(t){for(t=0;;++t)putchar((t|t>>17)>>(t>>7)|(t<<2|t<<8)>>(t>>11)|(t<<2|t<<11)>>(t>>17));}"], stdout=PIPE)
+		p2 = Popen(["gcc", "-xc", "-lm", "-o/tmp/algotunes/" + line_number + ".8b", "-"], stdin=p1.stdout)
+		p3 = Popen(["/tmp/algotunes/" + line_number + ".8b" ], stdout=PIPE)
+		p4 = Popen(["aplay"], stdin=p3.stdout)
+
 		self.objects["play_stop_" + line_number].setText("Stop")
 	
 	def stop(self, player, line_number):
