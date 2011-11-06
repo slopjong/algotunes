@@ -89,7 +89,6 @@ class MainWindow(QMainWindow):
 
 		m = re.search('remove', action)
 		if(m!=None):
-			self.handle_play_stop_clicked(line_number)
 			self.delete_line(line_number)
 
 		m = re.search('play_stop', action)
@@ -117,7 +116,12 @@ class MainWindow(QMainWindow):
 		play = self.objects["play_stop_" + line_number]
 		play.setParent(None)
 		del self.objects["play_stop_" + line_number]
-			
+		
+		player = self.players.get("player_" + line_number)
+		
+		if(player != None):
+			self.stop(player, line_number)
+
 	def handle_play_stop_clicked(self, line_number):
 		
 		player = self.players.get("player_" + line_number)
